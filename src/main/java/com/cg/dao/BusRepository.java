@@ -14,4 +14,10 @@ public interface BusRepository extends JpaRepository<Bus,String>{
 	@Query("from Bus b where b.src=?1 and locate(?2,b.dest)>0")
 	List<Bus> findBySrcAndDest(String src,String dest);
 	
+	@Query("from Bus b order by fare asc")
+	List<Bus>sortByFare();
+	
+	@Query("from Bus b where busId=?1")
+	Bus findByBusId(String busId);
+	
 }

@@ -2,6 +2,7 @@ package com.cg.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -25,7 +26,7 @@ public class BusController {
 	private BusRepository busRepository;
 	
 	
-	@GetMapping(path="buses/displayAllBuses")
+	@GetMapping(path="/buses/displayAllBuses")
 	public List<Bus> displayAllBuses()
 	{
 		List<Bus> buses=new ArrayList<Bus>();
@@ -34,7 +35,7 @@ public class BusController {
 	}
 	
 	
-	@PutMapping(path="buses/updateBusDetails/{busId}")
+	@PutMapping(path="/buses/updateBusDetails/{busId}")
 	public Bus updateBusDetails(@PathVariable String busId,@Valid @RequestBody Bus busDetails) throws ResourceNotFoundException
 	{
 		if (busRepository.findById(busId) != null) {
@@ -53,14 +54,14 @@ public class BusController {
 	}
 	
 	
-	@PostMapping(path="buses/addBusDetails")
+	@PostMapping(path="/buses/addBusDetails")
 	public Bus addBusDetails(@RequestBody Bus bus)
 	{
 		return busRepository.save(bus);
 	}
 	
 	
-	@DeleteMapping(path="buses/deleteBusDetails/{busId}")
+	@DeleteMapping(path="/buses/deleteBusDetails/{busId}")
 	public void deleteBusDetails(String busId) throws ResourceNotFoundException
 	{
 		if (busRepository.findById(busId) != null) {
@@ -75,7 +76,7 @@ public class BusController {
 	
 	
 	//user's/passenger's task
-	@GetMapping(path="buses/findBusesBySourceAndDestination/source/{source}/destination/{destination}")
+	@GetMapping(path="/buses/findBusesBySourceAndDestination/source/{source}/destination/{destination}")
 	public List<Bus> findBusesByRoute(@PathVariable String source,@PathVariable String destination) 
 	{	
 		List<Bus> buses=new ArrayList<Bus>();
@@ -83,17 +84,24 @@ public class BusController {
 		return buses;
 	}
 	
-	
-	//?????
-	@GetMapping(path="buses/seatAvailability")
-	public String   seatAvailability(int busId)
-	{
+	@GetMapping(path="/buses/findBusesByBusId/busId/{busId}")
+	public Bus findBusesByRoute(@PathVariable String busId) 
+	{	
 		
-		return "hoga hoga ruk thoda";	
+		return busRepository.findByBusId(busId);
+		
+	}
+
+	
+	
+	@GetMapping(path="/buses/sortBusBasedOnPrice")
+	List<Bus>sortByFare()
+	{
+		return busRepository.sortByFare();
 		
 	}
 	
-
+	
 	
 	
 	
